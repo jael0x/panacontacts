@@ -7,17 +7,27 @@ import ProfileScreen from './screens/ProfileScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 import ContactsScreen from './screens/ContactsScreen';
 import ContactDetailScreen from './screens/ContactDetailScreen';
-import { ContactStackTypes, BottomTabsTypes } from './NavigatorTypes';
+import { ContactStackTypes, BottomTabsTypes, FavoritesStackTypes } from './NavigatorTypes';
 
 const BottomTab = createBottomTabNavigator<BottomTabsTypes>();
-const Stack = createStackNavigator<ContactStackTypes>();
+const StackForContact = createStackNavigator<ContactStackTypes>();
+const StackForFavorites = createStackNavigator<FavoritesStackTypes>();
 
 const ContactStack: FC = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen name='ContactsScreen' component={ContactsScreen} options={{ title: 'Contactos' }} />
-            <Stack.Screen name='ContactDetailScreen' component={ContactDetailScreen} options={{ title: 'Contacto' }}/>
-        </Stack.Navigator>
+        <StackForContact.Navigator>
+            <StackForContact.Screen name='ContactsScreen' component={ContactsScreen} options={{ title: 'Contactos' }} />
+            <StackForContact.Screen name='ContactDetailScreen' component={ContactDetailScreen} options={{ title: 'Contacto' }}/>
+        </StackForContact.Navigator>
+    );
+}
+
+const FavoritesStack: FC = () => {
+    return (
+        <StackForFavorites.Navigator>
+            <StackForFavorites.Screen name='FavoritesScreen' component={FavoritesScreen} options={{ title: 'Favoritos' }} />
+            <StackForFavorites.Screen name='ContactDetailScreen' component={ContactDetailScreen} options={{ title: 'Contacto' }}/>
+        </StackForFavorites.Navigator>
     );
 }
 
@@ -34,10 +44,11 @@ const Navigator: FC = () => {
                 }}
             />
             <BottomTab.Screen
-                name='Favorites'
-                component={FavoritesScreen}
+                name='FavoritesStack'
+                component={FavoritesStack}
                 options={{
                     title: 'Favoritos',
+                    headerShown: false,
                     tabBarIcon: ({ color }) => <Icon name='star' size={24} color={color} />
                 }}
             />

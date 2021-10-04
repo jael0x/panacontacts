@@ -13,8 +13,13 @@ export type ContactStackTypes = {
     ContactDetailScreen: IContact;
 };
 
+export type FavoritesStackTypes = {
+    FavoritesScreen: undefined;
+    ContactDetailScreen: IContact;
+};
+
 export type BottomTabsTypes = {
     ContactStack: undefined;
-    Favorites: undefined;
+    FavoritesStack: undefined;
     Profile: undefined;
 };

@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
 import { View, ScrollView, RefreshControl, NativeScrollEvent } from 'react-native';
 import { makeRequest } from '../utils/axiosClient';
-import RenderContacts, { IContact } from '../components/RenderContacts';
+import RenderContacts from '../components/RenderContacts';
+import IContact from '../IContact';
 
 const ContactsScreen: FC = () => {
 
