@@ -1,20 +1,35 @@
 import React, { FC } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+
 import ProfileScreen from './screens/ProfileScreen';
 import FavoritesScreen from './screens/FavoritesScreen';
 import ContactsScreen from './screens/ContactsScreen';
-import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import ContactDetailScreen from './screens/ContactDetailScreen';
+import { ContactStackTypes, BottomTabsTypes } from './NavigatorTypes';
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator<BottomTabsTypes>();
+const Stack = createStackNavigator<ContactStackTypes>();
+
+const ContactStack: FC = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name='ContactsScreen' component={ContactsScreen} options={{ title: 'Contactos' }} />
+            <Stack.Screen name='ContactDetailScreen' component={ContactDetailScreen} options={{ title: 'Contacto' }}/>
+        </Stack.Navigator>
+    );
+}
 
 const Navigator: FC = () => {
     return (
         <BottomTab.Navigator>
             <BottomTab.Screen
-                name='Contacts'
-                component={ContactsScreen}
+                name='ContactStack'
+                component={ContactStack}
                 options={{
                     title: 'Contactos',
+                    headerShown: false,
                     tabBarIcon: ({ color }) => <Icon name='format-list-bulleted' size={24} color={color} />
                 }}
             />

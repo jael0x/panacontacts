@@ -1,49 +1,40 @@
 import React, { FC } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-
-export interface IContact {
-    cell: string;
-    email: string;
-    name: {
-        first: string;
-        last: string;
-        title: string;
-    };
-    phone: string;
-    picture: {
-        large: string;
-        medium: string;
-        thumbnail: string;
-    };
-}
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { ContactDetailsProp } from '../NavigatorTypes';
+import IContact from '../IContact'
 
 const RenderContacts: FC<{
     contacts: Array<IContact>
 }> = ({
     contacts
 }) => {
+        const navigation = useNavigation<ContactDetailsProp>();
+
         return (
             <View>
                 {contacts.map((contact, key) => {
                     return (
-                        <View key={key} style={styles.container}>
-                            <View key={key} style={styles.subContainer}>
-                                <View style={styles.imageContainer}>
-                                    <Image style={styles.image} source={{ uri: contact.picture.thumbnail }} />
+                        <TouchableWithoutFeedback key={key} onPress={() => { navigation.navigate('ContactDetailScreen', contact) }}>
+                            <View style={styles.container}>
+                                <View style={styles.subContainer}>
+                                    <View style={styles.imageContainer}>
+                                        <Image style={styles.image} source={{ uri: contact.picture.thumbnail }} />
+                                    </View>
+                                    <View>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{contact.name.first} {contact.name.last}</Text>
+                                        <Text style={{ fontSize: 15, color: '#2B90D8' }}>{contact.cell}</Text>
+                                    </View>
                                 </View>
-                                <View>
-                                    <Text style={{fontWeight: 'bold', fontSize: 16}}>{contact.name.first} {contact.name.last}</Text>
-                                    <Text style={{fontSize: 15, color: '#2B90D8'}}>{contact.cell}</Text>
-                                </View>
+                                <View style={{
+                                    height: 1,
+                                    backgroundColor: '#474B4E',
+                                    opacity: 0.2,
+                                    alignSelf: 'center',
+                                    width: '85%'
+                                }} />
                             </View>
-                            <View style={{
-                                height: 1,
-                                backgroundColor: '#474B4E',
-                                opacity: 0.2,
-                                alignSelf: 'center',
-                                width: '85%'
-                            }} />
-                        </View>
+                        </TouchableWithoutFeedback>
                     )
                 })}
             </View>
@@ -62,7 +53,7 @@ const styles = StyleSheet.create({
         marginVertical: 13,
         marginHorizontal: 20
     },
-    imageContainer:{
+    imageContainer: {
         marginRight: 15
     },
     image: {
